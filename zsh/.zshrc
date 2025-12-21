@@ -96,5 +96,10 @@ alias tmp='cd ~/tmp'
 
 # ------------------------------------------------------------------------------------------------
 
+# PC固有の設定（.zshrc.local）があれば読み込む
+if [ -f "$HOME/.zshrc.local" ]; then
+    source "$HOME/.zshrc.local"
+fi
+
 # starship 設定(最後に指定)
 eval "$(starship init zsh)"

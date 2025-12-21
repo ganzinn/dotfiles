@@ -41,6 +41,7 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 # gem設定（ローカル限定）
 export BUNDLE_BUILD__MYSQL2=--with-ldflags="-L$(brew --prefix zstd)/lib"
 export BUNDLE_BUILD__MECAB=--with-cppflags="-I$(brew --prefix mecab)/include"
+export BUNDLE_BUILD__OX=--with-cflags=-Wno-implicit-function-declaration
 export LDFLAGS="-L$(brew --prefix libffi)/lib"
 export CPPFLAGS="-I$(brew --prefix libffi)/include"
 export PKG_CONFIG_PATH="$(brew --prefix libffi)/lib/pkgconfig"

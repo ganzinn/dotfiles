@@ -82,10 +82,6 @@ function checkout-fzf-gitbranch() {
 zle -N checkout-fzf-gitbranch
 bindkey '^O' checkout-fzf-gitbranch
 
-
-to_snake()  { case_conv snake  "$@" }
-to_pascal() { case_conv pascal "$@" }
-
 # ------------------------------------------------------------------------------------------------
 # alias ------------------------------------------------------------------------------------------
 alias cot='open $1 -a "/Applications/CotEditor.app"'

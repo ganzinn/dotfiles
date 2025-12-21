@@ -5,6 +5,6 @@ gui:
   sidePanelWidth: 0.2 # gives you more space to show things side-by-side
 git:
   autoFetch: false
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"

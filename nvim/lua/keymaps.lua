@@ -1,0 +1,26 @@
+local keymap = vim.keymap
+
+vim.g.mapleader = " "
+
+-- 挿入モードでのカーソル移動
+keymap.set('i', '<C-j>', '<Down>')
+keymap.set('i', '<C-k>', '<Up>')
+keymap.set('i', '<C-h>', '<Left>')
+keymap.set('i', '<C-l>', '<Right>')
+
+-- バッファー移動
+keymap.set('n', '<C-b>', '<cmd>bnext<cr>')
+keymap.set('n', '<C-S-b>', '<cmd>bprev<cr>')
+
+-- 画面分割
+keymap.set('n', '<C-w>\\', '<cmd>vsplit<Return><C-w>w')
+keymap.set('n', '<C-w>-', '<cmd>split<Return><C-w>w')
+
+-- アクティブウィンドウの移動
+-- keymap.set('n', '<leader>h', '<C-w>h')
+-- keymap.set('n', '<leader>k', '<C-w>k')
+-- keymap.set('n', '<leader>j', '<C-w>j')
+-- keymap.set('n', '<leader>l', '<C-w>l')
+
+-- 検索ハイライト解除
+keymap.set('n', '<Esc>', '<cmd>nohlsearch<cr>', { desc = '検索ハイライト解除' })

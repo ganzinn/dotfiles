@@ -11,15 +11,6 @@ table.insert(config.keys,
   { key = 'a', mods = 'LEADER|CTRL', action = act.SendKey{ key = 'a', mods = 'CTRL' } }
 )
 
-for _, value in ipairs({
-  -- Option + 左矢印 で単語単位で戻る (Esc + b を送信)
-  { key = 'LeftArrow', mods = 'OPT', action = act.SendString '\x1bb' },
-  -- Option + 右矢印 で単語単位で進む (Esc + f を送信)
-  { key = 'RightArrow', mods = 'OPT', action = act.SendString '\x1bf' }
-}) do
-  table.insert(config.keys, value)
-end
-
 -- ClaudeCode設定
 table.insert(config.keys,
   -- Shift+Enterで改行を送信
@@ -124,6 +115,13 @@ for _, value in ipairs({
   { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
   { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
   { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+  -- サイズ変更
+  { key = 'LeftArrow', mods = 'OPT', action = act.AdjustPaneSize { 'Left', 25 } },
+  { key = 'RightArrow', mods = 'OPT', action = act.AdjustPaneSize { 'Right', 25 } },
+  { key = 'UpArrow', mods = 'OPT', action = act.AdjustPaneSize { 'Up', 10 } },
+  { key = 'UpArrow', mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Up', 100 } },
+  { key = 'DownArrow', mods = 'OPT', action = act.AdjustPaneSize { 'Down', 10 } },
+  { key = 'DownArrow', mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Down', 100 } },
   -- 最大化
   { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
   -- ペインの削除

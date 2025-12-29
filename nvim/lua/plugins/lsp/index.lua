@@ -1,29 +1,172 @@
--- local lsp_server = {
---   "lua_ls",
---   "ts_ls",
---   "pyright",
---   "ruby-lsp",
--- }
-
 return {
-  -- LSP設定
-  "neovim/nvim-lspconfig",
-  -- event = { "BufReadPost", "BufNewFile" },
-  -- cmd = { "LspInfo", "LspInstall", "LspUninstall" },
-  dependencies = {
-    { "williamboman/mason.nvim" },
-    { "williamboman/mason-lspconfig.nvim" },
+  -- Mason: LSPサーバーのインストール管理
+  {
+    "mason-org/mason.nvim",
+    cmd = "Mason",
+    build = ":MasonUpdate",
+    opts = {},
   },
-  config = function()
-    require("mason").setup()
-    require("mason-lspconfig").setup({
-      handlers = {
-        function(server_name)
-          require("lspconfig")[server_name].setup({})
-        end,
+
+  -- Mason-lspconfig: サーバーの自動インストール・有効化
+  {
+    "mason-org/mason-lspconfig.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    opts = {
+      ensure_installed = {
+        "ruby_lsp",
+        "ts_ls",
+        "lua_ls",
       },
-    })
-  end,
+      automatic_enable = true,
+    },
+  },
 
+  -- nvim-lspconfig: LSP設定データ（runtimepathに追加）
+  {
+    "neovim/nvim-lspconfig",
+    lazy = true,
+  },
+
+  -- LSP共通設定
+  {
+    "hrsh7th/cmp-nvim-lsp",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      -- 全サーバー共通のcapabilities
+      vim.lsp.config("*", {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      })
+
+      -- Lua固有設定
+      vim.lsp.config("lua_ls", {
+        settings = {
+          Lua = {
+            runtime = { version = "LuaJIT" },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
+            },
+            telemetry = { enable = false },
+          },
+        },
+      })
+
+      -- LSPアタッチ時のキーマップ（デフォルトにないもののみ）
+      -- デフォルト: K, grn, grr, gri, gra, gO, <C-s>, [d, ]d, [D, ]D
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        callback = function(ev)
+          local opts = { buffer = ev.buf, silent = true }
+
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+          vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
+          vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+          vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+          vim.keymap.set("n", "<leader>f", function()
+            vim.lsp.buf.format({ async = true })
+          end, opts)
+        end,
+      })
+
+      -- 診断表示の設定
+      vim.opt.updatetime = 250
+
+      vim.diagnostic.config({
+        virtual_text = false,
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+        float = {
+          border = "rounded",
+          source = true,
+        },
+      })
+
+      -- カーソルホバーで診断を自動表示
+      -- vim.api.nvim_create_autocmd("CursorHold", {
+      --   callback = function()
+      --     vim.diagnostic.open_float(nil, { focus = false })
+      --   end,
+      -- })
+    end,
+  },
+
+  -- nvim-cmp: 補完エンジン
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
+    },
+    config = function()
+      local cmp = require("cmp")
+      local luasnip = require("luasnip")
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "buffer" },
+          { name = "path" },
+        }),
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+      })
+    end,
+  },
+
+  -- LuaSnip: スニペットエンジン
+  {
+    "L3MON4D3/LuaSnip",
+    lazy = true,
+    build = "make install_jsregexp",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+    },
+    config = function()
+      require("luasnip.loaders.from_vscode").lazy_load()
+    end,
+  },
 }
-

@@ -46,6 +46,7 @@ require("lazy").setup({
     { import = "plugins.close-buffers" },
     { import = "plugins.diffview" },
     { import = "plugins.gitlinker" },
+    { import = "plugins.git-blame" },
     { import = "plugins.nvim-highlight-colors" },
     { import = "plugins.nvim-scrollbar" },
     { import = "plugins.nvim-surround" },

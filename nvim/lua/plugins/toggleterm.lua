@@ -25,6 +25,6 @@ return {
 
     vim.keymap.set("n", "<leader>gg", function()
       lazygit:toggle()
-    end, {noremap = true, silent = true})
+    end, {noremap = true, silent = true, desc = 'Lazygitを開く'})
   end
 }

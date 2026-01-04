@@ -6,13 +6,13 @@ return {
       'n',
       '<leader>ta',
       '<CMD>lua require("close_buffers").delete({type = "hidden"})<CR>',
-      { noremap = true, silent = true }
+      { noremap = true, silent = true, desc = '非表示バッファを全て閉じる' }
     )
     vim.keymap.set(
       'n',
       '<leader>tc',
       '<CMD>lua require("close_buffers").delete({type = "this"})<CR>',
-      { noremap = true, silent = true }
+      { noremap = true, silent = true, desc = '現在のバッファを閉じる' }
     )
   end,
 }

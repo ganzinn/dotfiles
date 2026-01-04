@@ -19,6 +19,11 @@ return {
     },
     close_if_last_window = true, -- neo-tree以外のウィンドウがすべて閉じられた場合、neo-treeも自動で閉じてNeovimを終了
     filesystem = {
+      window = {
+        mappings = {
+          ["<Esc><CR>"] = "expand_all_subnodes", -- カーソル位置のディレクトリを再帰的に展開（Shift+Enter）
+        },
+      },
       filtered_items = {
         hide_dotfiles = false,    -- ドットファイル（.gitignore等）を表示
         hide_gitignored = false,  -- .gitignoreで無視されたファイルを表示

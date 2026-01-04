@@ -53,6 +53,7 @@ require("lazy").setup({
     { import = "plugins.vimdoc-ja" },
     { import = "plugins.im-select" },
     { import = "plugins.claudecode" },
+    { import = "plugins.markdown-preview" },
     -- { import = "plugins" }, -- ディレクトリまとめて読み込む
 
     -- LSP関連

@@ -3,8 +3,12 @@ return {
   'Wansmer/treesj',
   dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
 
-  keys = { '<space>m', },
+  keys = {
+    { '<leader>sj', '<cmd>TSJToggle<cr>', desc = 'コードブロックの分割/結合' },
+  },
   config = function()
-    require('treesj').setup({--[[ your config ]]})
+    require('treesj').setup({
+      use_default_keymaps = false,
+    })
   end,
 }

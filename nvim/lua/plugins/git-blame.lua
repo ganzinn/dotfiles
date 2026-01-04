@@ -13,13 +13,27 @@ return {
     {
       "<leader>gP",
       function()
+        -- クリップボードをクリアして前の値が使われるのを防ぐ
+        vim.fn.setreg("+", "")
         vim.cmd("GitBlameCopyPRURL")
-        vim.defer_fn(function()
+
+        local attempts = 0
+        local max_attempts = 30 -- 最大3秒待機
+
+        local function check_and_open()
+          attempts = attempts + 1
           local url = vim.fn.getreg("+")
+
           if url and url ~= "" then
             vim.fn.system({ "open", url })
+          elseif attempts < max_attempts then
+            vim.defer_fn(check_and_open, 100)
+          else
+            vim.notify("PR URLの取得がタイムアウトしました", vim.log.levels.WARN)
           end
-        end, 100)
+        end
+
+        vim.defer_fn(check_and_open, 100)
       end,
       desc = "PRをブラウザで開く",
     },

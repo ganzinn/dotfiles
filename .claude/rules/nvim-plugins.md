@@ -14,3 +14,11 @@ paths: nvim/lua/plugins/*.lua
 - `-- ファイルエクスプローラー`
 - `-- Git変更箇所の表示`
 - `-- ターミナル表示`
+
+## lazyconfig.lua への登録
+
+プラグインファイルを新規作成した場合は、必ず `nvim/lua/lazyconfig.lua` の `spec` 配列に以下の形式で追加してください：
+
+```lua
+{ import = "plugins.<プラグイン名>" },
+```

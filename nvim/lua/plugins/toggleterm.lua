@@ -23,7 +23,7 @@ return {
       end,
     })
 
-    vim.keymap.set("n", "<leader>g", function()
+    vim.keymap.set("n", "<leader>gg", function()
       lazygit:toggle()
     end, {noremap = true, silent = true})
   end

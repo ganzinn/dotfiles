@@ -10,5 +10,18 @@ return {
   keys = {
     { "<leader>gb", "<cmd>GitBlameToggle<cr>", desc = "Git Blame トグル" },
     { "<leader>gp", "<cmd>GitBlameCopyPRURL<cr>", desc = "PR URLをコピー" },
+    {
+      "<leader>gP",
+      function()
+        vim.cmd("GitBlameCopyPRURL")
+        vim.defer_fn(function()
+          local url = vim.fn.getreg("+")
+          if url and url ~= "" then
+            vim.fn.system({ "open", url })
+          end
+        end, 100)
+      end,
+      desc = "PRをブラウザで開く",
+    },
   },
 }

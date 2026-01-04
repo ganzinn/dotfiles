@@ -24,3 +24,14 @@ keymap.set('n', '<C-w>-', '<cmd>split<Return><C-w>w')
 
 -- 検索ハイライト解除
 keymap.set('n', '<Esc>', '<cmd>nohlsearch<cr>', { desc = '検索ハイライト解除' })
+
+-- ファイルパスをコピー
+keymap.set('n', '<leader>cp', function()
+  vim.fn.setreg('+', vim.fn.expand('%:.'))
+  print('Copied: ' .. vim.fn.expand('%:.'))
+end, { desc = '相対パスをコピー' })
+
+keymap.set('n', '<leader>cP', function()
+  vim.fn.setreg('+', vim.fn.expand('%:p'))
+  print('Copied: ' .. vim.fn.expand('%:p'))
+end, { desc = 'フルパスをコピー' })

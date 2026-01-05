@@ -16,6 +16,7 @@ path=(
   $HOME/.local/bin
   $GOBIN
   /opt/homebrew/opt/mysql-client@8.0/bin
+  /opt/homebrew/opt/openssl/bin
   $path  # 既存のシステムPATHを後ろに追加
 )
 export PATH

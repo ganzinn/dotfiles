@@ -57,6 +57,7 @@ require("lazy").setup({
     { import = "plugins.claudecode" },
     { import = "plugins.markdown-preview" },
     { import = "plugins.csvview" },
+    { import = "plugins.conform" },
     -- { import = "plugins" }, -- ディレクトリまとめて読み込む
 
     -- LSP関連

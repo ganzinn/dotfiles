@@ -2,7 +2,7 @@ return {
   -- Mason: LSPサーバーのインストール管理
   {
     "mason-org/mason.nvim",
-    cmd = "Mason",
+    cmd = { "Mason", "MasonInstall", "MasonUpdate", "MasonUninstall" },
     build = ":MasonUpdate",
     opts = {},
   },
@@ -36,6 +36,10 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
+      -- 診断関連キーマップ（グローバル設定、LSPアタッチ不要）
+      vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "診断をフロートで表示" })
+      vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "診断をロケーションリストに表示" })
+
       -- 全サーバー共通のcapabilities
       vim.lsp.config("*", {
         capabilities = require("cmp_nvim_lsp").default_capabilities(),
@@ -55,6 +59,13 @@ return {
         },
       })
 
+      -- TypeScript固有設定（診断メッセージを日本語化）
+      vim.lsp.config("ts_ls", {
+        init_options = {
+          locale = "ja",
+        },
+      })
+
       -- LSPアタッチ時のキーマップ（デフォルトにないもののみ）
       -- デフォルト: K, grn, grr, gri, gra, gO, <C-s>, [d, ]d, [D, ]D
       vim.api.nvim_create_autocmd("LspAttach", {
@@ -65,8 +76,6 @@ return {
           vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
           vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
           vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
-          vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-          vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
           vim.keymap.set("n", "<leader>f", function()
             vim.lsp.buf.format({ async = true })
           end, opts)

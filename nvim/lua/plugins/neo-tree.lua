@@ -41,5 +41,27 @@ return {
   },
   keys = {
     { mode = "n", "<C-e>", "<cmd>Neotree toggle action=show<cr>", { desc = "neo-treeの開閉" } },
+    {
+      '<leader>gs',
+      function()
+        local base = vim.g.gitsigns_base or 'HEAD'
+        local current_win = vim.api.nvim_get_current_win()
+
+        -- グローバル変数でソース状態を追跡
+        if vim.g.neo_tree_source == 'git_status' then
+          vim.g.neo_tree_source = 'filesystem'
+          vim.cmd('Neotree filesystem git_base=' .. base)
+        else
+          vim.g.neo_tree_source = 'git_status'
+          if base == 'HEAD' then
+            vim.cmd('Neotree git_status git_base=HEAD')
+          else
+            vim.cmd('Neotree git_status git_base=' .. base)
+          end
+        end
+        vim.api.nvim_set_current_win(current_win)
+      end,
+      desc = 'neo-tree filesystem/git_statusを切り替え',
+    },
   }
 }

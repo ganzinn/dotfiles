@@ -28,9 +28,11 @@ opt.softtabstop = 2
 opt.shiftwidth = 2
 opt.smartindent = true
 
--- 折りたたみ設定
-opt.foldmethod = "indent"
-opt.foldlevel = 99 -- デフォルトで開くため設定
+-- 折りたたみ設定（nvim-ufo用）
+opt.foldcolumn = "auto"
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldenable = true
 
 opt.hidden = true
 opt.swapfile = false -- swapfileを作成しないように設定

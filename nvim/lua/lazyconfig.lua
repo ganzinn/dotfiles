@@ -41,6 +41,8 @@ require("lazy").setup({
     -- { import = "plugins.indent" },
     { import = "plugins.hlchunk" },
     { import = "plugins.gitsigns" },
+    { import = "plugins.statuscol" },
+    { import = "plugins.ufo" },
     { import = "plugins.comment" },
     { import = "plugins.treesj" },
     { import = "plugins.close-buffers" },

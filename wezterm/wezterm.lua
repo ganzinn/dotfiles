@@ -116,12 +116,12 @@ for _, value in ipairs({
   { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
   { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
   -- サイズ変更
-  { key = 'LeftArrow', mods = 'OPT', action = act.AdjustPaneSize { 'Left', 25 } },
-  { key = 'RightArrow', mods = 'OPT', action = act.AdjustPaneSize { 'Right', 25 } },
-  { key = 'UpArrow', mods = 'OPT', action = act.AdjustPaneSize { 'Up', 10 } },
-  { key = 'UpArrow', mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Up', 100 } },
-  { key = 'DownArrow', mods = 'OPT', action = act.AdjustPaneSize { 'Down', 10 } },
-  { key = 'DownArrow', mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Down', 100 } },
+  { key = 'h', mods = 'OPT', action = act.AdjustPaneSize { 'Left', 25 } },
+  { key = 'l', mods = 'OPT', action = act.AdjustPaneSize { 'Right', 25 } },
+  { key = 'k', mods = 'OPT', action = act.AdjustPaneSize { 'Up', 10 } },
+  { key = 'k', mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Up', 100 } },
+  { key = 'j', mods = 'OPT', action = act.AdjustPaneSize { 'Down', 10 } },
+  { key = 'j', mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Down', 100 } },
   -- 最大化
   { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
   -- ペインの削除

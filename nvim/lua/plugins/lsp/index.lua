@@ -71,14 +71,12 @@ return {
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
-          local opts = { buffer = ev.buf, silent = true }
-
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-          vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
-          vim.keymap.set("n", "<leader>f", function()
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = ev.buf, silent = true, desc = "定義へジャンプ" })
+          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = ev.buf, silent = true, desc = "宣言へジャンプ" })
+          vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { buffer = ev.buf, silent = true, desc = "型定義へジャンプ" })
+          vim.keymap.set("n", "<leader>lf", function()
             vim.lsp.buf.format({ async = true })
-          end, opts)
+          end, { buffer = ev.buf, silent = true, desc = "フォーマット" })
         end,
       })
 

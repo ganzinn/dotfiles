@@ -47,7 +47,7 @@ return {
   keys = {
     { mode = "n", "<C-e>", "<cmd>Neotree toggle action=show<cr>", { desc = "neo-treeの開閉" } },
     {
-      '<leader>gs',
+      '<leader>f',
       function()
         local base = vim.g.gitsigns_base or 'HEAD'
         local current_win = vim.api.nvim_get_current_win()

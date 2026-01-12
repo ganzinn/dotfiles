@@ -13,13 +13,10 @@ eval "$(zoxide init zsh)"
 # 環境変数 ---------------------------------------------------------------------------------------
 typeset -U path PATH
 path=(
-  $HOME/.local/bin
-  $GOBIN
-  /opt/homebrew/opt/mysql-client@8.0/bin
-  /opt/homebrew/opt/openssl/bin
+  $HOME/.local/bin(N-/)
+  $GOBIN(N-/)
   $path  # 既存のシステムPATHを後ろに追加
 )
-export PATH
 
 # XDG Base Directory
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -101,6 +98,8 @@ alias tmp='cd ~/tmp'
 if [ -f "$HOME/.zshrc.local" ]; then
     source "$HOME/.zshrc.local"
 fi
+
+export PATH
 
 # starship 設定(最後に指定)
 eval "$(starship init zsh)"

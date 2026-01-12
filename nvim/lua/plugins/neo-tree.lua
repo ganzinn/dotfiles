@@ -9,6 +9,11 @@ return {
     {"3rd/image.nvim", opts = {}},
   },
   opts = {
+    window = {
+      position = "left",
+      width = 40,
+      auto_expand_width = false,
+    },
     default_component_configs = {
       git_status = {
         symbols = {

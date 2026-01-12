@@ -9,8 +9,8 @@ keymap.set('i', '<C-h>', '<Left>')
 keymap.set('i', '<C-l>', '<Right>')
 
 -- バッファー移動
-keymap.set('n', '<C-b>', '<cmd>bnext<cr>')
-keymap.set('n', '<C-S-b>', '<cmd>bprev<cr>')
+keymap.set('n', '<leader>bn', '<cmd>bnext<cr>', { desc = '次のバッファー' })
+keymap.set('n', '<leader>bp', '<cmd>bprev<cr>', { desc = '前のバッファー' })
 
 -- 画面分割
 keymap.set('n', '<C-w>\\', '<cmd>vsplit<Return><C-w>w')

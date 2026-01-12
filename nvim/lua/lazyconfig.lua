@@ -58,6 +58,7 @@ require("lazy").setup({
     { import = "plugins.markdown-preview" },
     { import = "plugins.csvview" },
     { import = "plugins.conform" },
+    { import = "plugins.nvim-lint" },
     -- { import = "plugins" }, -- ディレクトリまとめて読み込む
 
     -- LSP関連

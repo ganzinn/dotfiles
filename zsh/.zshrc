@@ -14,8 +14,7 @@ eval "$(zoxide init zsh)"
 typeset -U path PATH
 path=(
   $HOME/.local/bin(N-/)
-  $GOBIN(N-/)
-  $path  # 既存のシステムPATHを後ろに追加
+  $path
 )
 
 # XDG Base Directory

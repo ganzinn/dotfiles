@@ -23,8 +23,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-if [[ -f "$HOME/.zsh_secrets" ]]; then
-    source "$HOME/.zsh_secrets"
+if [[ -f "$ZDOTDIR/.zsh_secrets" ]]; then
+    source "$ZDOTDIR/.zsh_secrets"
 fi
 
 export GITHUB_TOKEN_FOR_GITHUB_PACKAGES=$GITHUB_TOKEN
@@ -94,8 +94,8 @@ alias tmp='cd ~/tmp'
 # ------------------------------------------------------------------------------------------------
 
 # PC固有の設定（.zshrc.local）があれば読み込む
-if [ -f "$HOME/.zshrc.local" ]; then
-    source "$HOME/.zshrc.local"
+if [ -f "$ZDOTDIR/.zshrc.local" ]; then
+    source "$ZDOTDIR/.zshrc.local"
 fi
 
 export PATH

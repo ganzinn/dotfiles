@@ -1,3 +1,10 @@
+# zsh設定ファイル
+.zprofile.local
 .zsh_secrets
-.zshenv.local
 .zshrc.local
+
+# zsh履歴ファイル
+.zsh_history
+
+# zsh補完ダンプファイル
+.zcompdump

@@ -45,3 +45,11 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   group = vim.api.nvim_create_augroup('AutoRefresh', { clear = true }),
   command = 'checktime'
 })
+
+-- .zprofile.local を zsh として認識
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*.zprofile.local',
+  callback = function()
+    vim.bo.filetype = 'zsh'
+  end,
+})

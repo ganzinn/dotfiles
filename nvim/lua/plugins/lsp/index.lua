@@ -17,7 +17,7 @@ return {
     },
     opts = {
       ensure_installed = {
-        "ruby_lsp",
+        -- "ruby_lsp",  -- mise経由で使用するため削除
         "ts_ls",
         "lua_ls",
       },
@@ -64,6 +64,11 @@ return {
         init_options = {
           locale = "ja",
         },
+      })
+
+      -- Ruby LSP: mise経由で実行
+      vim.lsp.config("ruby_lsp", {
+        cmd = { "mise", "exec", "--", "ruby-lsp" },
       })
 
       -- LSPアタッチ時のキーマップ（デフォルトにないもののみ）

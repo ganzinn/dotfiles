@@ -45,7 +45,21 @@ return {
     },
   },
   keys = {
-    { mode = "n", "<C-e>", "<cmd>Neotree toggle action=show<cr>", { desc = "neo-treeの開閉" } },
+    {
+      mode = "n",
+      "<C-e>",
+      function()
+        local base = vim.g.gitsigns_base or 'HEAD'
+        local source = vim.g.neo_tree_source or 'filesystem'
+
+        if source == 'git_status' then
+          vim.cmd('Neotree toggle git_status git_base=' .. base .. ' action=show')
+        else
+          vim.cmd('Neotree toggle filesystem git_base=' .. base .. ' action=show')
+        end
+      end,
+      desc = "neo-treeの開閉"
+    },
     {
       '<leader>f',
       function()

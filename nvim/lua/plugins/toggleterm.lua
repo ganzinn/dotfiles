@@ -20,6 +20,10 @@ return {
       -- function to run on closing the terminal
       on_close = function()
         vim.cmd("startinsert!")
+        -- neo-treeのgit statusを更新
+        pcall(function()
+          require("neo-tree.events").fire_event("git_event")
+        end)
       end,
     })
 

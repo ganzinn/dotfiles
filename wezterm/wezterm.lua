@@ -8,23 +8,23 @@ config.keys = {}
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 2000 }
 table.insert(config.keys,
   -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
-  { key = 'a', mods = 'LEADER|CTRL', action = act.SendKey{ key = 'a', mods = 'CTRL' } }
+  { key = 'a', mods = 'LEADER|CTRL', action = act.SendKey { key = 'a', mods = 'CTRL' } }
 )
 
 -- ClaudeCode設定
 table.insert(config.keys,
   -- Shift+Enterで改行を送信
-  { key = 'Enter', mods = 'SHIFT', action = act{ SendString = '\x1b\r' } }
+  { key = 'Enter', mods = 'SHIFT', action = act { SendString = '\x1b\r' } }
 )
 
 -- タイトルバー関連
 config.window_decorations = "RESIZE" -- タイトルバーを非表示
 
 -- タブ関連
-config.window_frame = { inactive_titlebar_bg = "none", active_titlebar_bg = "none"} -- タブバーの透過
-config.window_background_gradient = { colors = { "#000000" } } -- タブバーを背景色に合わせる
-config.show_new_tab_button_in_tab_bar = false -- タブの追加ボタンを非表示
-config.colors = { tab_bar = { inactive_tab_edge = "none"} } -- タブ同士の境界線を非表示
+config.window_frame = { inactive_titlebar_bg = "none", active_titlebar_bg = "none" } -- タブバーの透過
+config.window_background_gradient = { colors = { "#000000" } }                       -- タブバーを背景色に合わせる
+config.show_new_tab_button_in_tab_bar = false                                        -- タブの追加ボタンを非表示
+config.colors = { tab_bar = { inactive_tab_edge = "none" } }                         -- タブ同士の境界線を非表示
 --config.show_close_tab_button_in_tabs = false -- タブの閉じるボタンを非表示（nightlyのみ使用可能）
 --config.hide_tab_bar_if_only_one_tab = true -- タブバー非表示
 
@@ -38,9 +38,9 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   if tab.is_active then
     background = "#ae8b2d"
     foreground = "#FFFFFF"
-  -- elseif hover then
-  --   background = '#3b3052'
-  --   foreground = '#909090'
+    -- elseif hover then
+    --   background = '#3b3052'
+    --   foreground = '#909090'
   end
   local edge_foreground = background
   local function tab_title(tab_info)
@@ -73,7 +73,7 @@ for _, value in ipairs({
       if line then
         window:active_tab():set_title(line)
       end
-    end)},
+    end) },
   },
 
 }) do
@@ -102,32 +102,32 @@ wezterm.on('toggle-opacity', function(window, pane)
   window:set_config_overrides(overrides)
 end)
 table.insert(config.keys,
-  { key = 'u',mods = 'CMD', action = act.EmitEvent 'toggle-opacity' }
+  { key = 'u', mods = 'CMD', action = act.EmitEvent 'toggle-opacity' }
 )
 
 -- パネル関連
 for _, value in ipairs({
   -- 分割
   { key = '|', mods = 'LEADER|SHIFT', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
-  { key = '-', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+  { key = '-', mods = 'LEADER',       action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
   -- 移動
-  { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
-  { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
-  { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
-  { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+  { key = "h", mods = "LEADER",       action = act.ActivatePaneDirection("Left") },
+  { key = "l", mods = "LEADER",       action = act.ActivatePaneDirection("Right") },
+  { key = "k", mods = "LEADER",       action = act.ActivatePaneDirection("Up") },
+  { key = "j", mods = "LEADER",       action = act.ActivatePaneDirection("Down") },
   -- サイズ変更
-  { key = 'h', mods = 'OPT', action = act.AdjustPaneSize { 'Left', 25 } },
-  { key = 'l', mods = 'OPT', action = act.AdjustPaneSize { 'Right', 25 } },
-  { key = 'k', mods = 'OPT', action = act.AdjustPaneSize { 'Up', 10 } },
-  { key = 'k', mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Up', 100 } },
-  { key = 'j', mods = 'OPT', action = act.AdjustPaneSize { 'Down', 10 } },
-  { key = 'j', mods = 'OPT|SHIFT', action = act.AdjustPaneSize { 'Down', 100 } },
+  { key = 'h', mods = 'OPT',          action = act.AdjustPaneSize { 'Left', 25 } },
+  { key = 'l', mods = 'OPT',          action = act.AdjustPaneSize { 'Right', 25 } },
+  { key = 'k', mods = 'OPT',          action = act.AdjustPaneSize { 'Up', 10 } },
+  { key = 'k', mods = 'OPT|SHIFT',    action = act.AdjustPaneSize { 'Up', 100 } },
+  { key = 'j', mods = 'OPT',          action = act.AdjustPaneSize { 'Down', 10 } },
+  { key = 'j', mods = 'OPT|SHIFT',    action = act.AdjustPaneSize { 'Down', 100 } },
   -- 最大化
-  { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
+  { key = 'z', mods = 'LEADER',       action = act.TogglePaneZoomState },
   -- ペインの削除
   { key = 'P', mods = 'LEADER|SHIFT', action = act.CloseCurrentPane { confirm = true } },
   -- コピーモード
-  { key = '[', mods = 'LEADER', action = act.ActivateCopyMode },
+  { key = '[', mods = 'LEADER',       action = act.ActivateCopyMode },
 }) do
   table.insert(config.keys, value)
 end
@@ -141,26 +141,26 @@ for _, value in ipairs({
     description = "(wezterm) Create new workspace:",
     action = wezterm.action_callback(function(window, pane, line)
       if line then
-        window:perform_action(act.SwitchToWorkspace{ name = line }, pane)
+        window:perform_action(act.SwitchToWorkspace { name = line }, pane)
       end
-    end)},
+    end) },
   },
   -- Select workspace
   { mods = 'LEADER', key = 'w',
-    action = wezterm.action_callback (function (win, pane)
+    action = wezterm.action_callback(function(win, pane)
       -- workspace のリストを作成
       local workspaces = {}
       for _, name in ipairs(wezterm.mux.get_workspace_names()) do
-        table.insert(workspaces, { id = name, label = name})
+        table.insert(workspaces, { id = name, label = name })
       end
       local current = wezterm.mux.get_active_workspace()
       -- 選択メニューを起動
       win:perform_action(act.InputSelector {
-        action = wezterm.action_callback(function (_, _, id, label)
+        action = wezterm.action_callback(function(_, _, id, label)
           if not id and not label then
-            wezterm.log_info "Workspace selection canceled"  -- 入力が空ならキャンセル
+            wezterm.log_info "Workspace selection canceled"               -- 入力が空ならキャンセル
           else
-            win:perform_action(act.SwitchToWorkspace { name = id }, pane)  -- workspace を移動
+            win:perform_action(act.SwitchToWorkspace { name = id }, pane) -- workspace を移動
           end
         end),
         title = "Select workspace",
@@ -175,9 +175,9 @@ for _, value in ipairs({
     description = "(wezterm) Set workspace title:",
     action = wezterm.action_callback(function(window, pane, line)
       if line then
-        wezterm.mux.rename_workspace( wezterm.mux.get_active_workspace(), line )
+        wezterm.mux.rename_workspace(wezterm.mux.get_active_workspace(), line)
       end
-    end)},
+    end) },
   },
 }) do
   table.insert(config.keys, value)

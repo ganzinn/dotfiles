@@ -47,10 +47,11 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
 })
 
 -- neo-treeではfoldcolumnを非表示
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'neo-tree',
+vim.api.nvim_create_autocmd('BufEnter', {
   callback = function()
-    vim.opt_local.foldcolumn = "0"
+    if vim.bo.filetype == 'neo-tree' then
+      vim.opt_local.foldcolumn = "0"
+    end
   end,
 })
 

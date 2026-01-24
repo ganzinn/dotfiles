@@ -46,6 +46,14 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   command = 'checktime'
 })
 
+-- neo-treeではfoldcolumnを非表示
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'neo-tree',
+  callback = function()
+    vim.opt_local.foldcolumn = "0"
+  end,
+})
+
 -- .zprofile.local を zsh として認識
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = '*.zprofile.local',

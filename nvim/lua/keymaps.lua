@@ -35,3 +35,9 @@ keymap.set('n', '<leader>cP', function()
   vim.fn.setreg('+', vim.fn.expand('%:p'))
   print('Copied: ' .. vim.fn.expand('%:p'))
 end, { desc = 'フルパスをコピー' })
+
+-- 折り返し表示の切替
+keymap.set('n', '<leader>w', function()
+  vim.wo.wrap = not vim.wo.wrap
+  print('wrap: ' .. (vim.wo.wrap and 'ON' or 'OFF'))
+end, { desc = '折り返し切替' })

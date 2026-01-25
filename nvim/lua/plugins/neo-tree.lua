@@ -1,3 +1,9 @@
+-- gitリポジトリかどうかを判定するヘルパー関数
+local function is_git_repo()
+  vim.fn.system('git rev-parse --is-inside-work-tree 2>/dev/null')
+  return vim.v.shell_error == 0
+end
+
 return {
   -- ファイルエクスプローラー
   "nvim-neo-tree/neo-tree.nvim",
@@ -51,11 +57,12 @@ return {
       function()
         local base = vim.g.gitsigns_base or 'HEAD'
         local source = vim.g.neo_tree_source or 'filesystem'
+        local git_base_opt = is_git_repo() and (' git_base=' .. base) or ''
 
         if source == 'git_status' then
-          vim.cmd('Neotree toggle git_status git_base=' .. base .. ' action=show')
+          vim.cmd('Neotree toggle git_status' .. git_base_opt .. ' action=show')
         else
-          vim.cmd('Neotree toggle filesystem git_base=' .. base .. ' action=show')
+          vim.cmd('Neotree toggle filesystem' .. git_base_opt .. ' action=show')
         end
       end,
       desc = "neo-treeの開閉"
@@ -65,18 +72,15 @@ return {
       function()
         local base = vim.g.gitsigns_base or 'HEAD'
         local current_win = vim.api.nvim_get_current_win()
+        local git_base_opt = is_git_repo() and (' git_base=' .. base) or ''
 
         -- グローバル変数でソース状態を追跡
         if vim.g.neo_tree_source == 'git_status' then
           vim.g.neo_tree_source = 'filesystem'
-          vim.cmd('Neotree filesystem git_base=' .. base)
+          vim.cmd('Neotree filesystem' .. git_base_opt)
         else
           vim.g.neo_tree_source = 'git_status'
-          if base == 'HEAD' then
-            vim.cmd('Neotree git_status git_base=HEAD')
-          else
-            vim.cmd('Neotree git_status git_base=' .. base)
-          end
+          vim.cmd('Neotree git_status' .. git_base_opt)
         end
         vim.api.nvim_set_current_win(current_win)
       end,

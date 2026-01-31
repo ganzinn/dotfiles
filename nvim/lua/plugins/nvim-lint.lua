@@ -13,6 +13,10 @@ return {
       ruby = { "rubocop" },
     }
 
+    -- rubocop を bundle exec 経由で実行
+    lint.linters.rubocop.cmd = "bundle"
+    lint.linters.rubocop.args = { "exec", "rubocop", "--format", "json", "--force-exclusion" }
+
     -- ファイル保存時とファイル読み込み時にlintを実行
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
       callback = function()

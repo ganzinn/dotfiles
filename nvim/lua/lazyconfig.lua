@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -24,8 +24,8 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-    -- 他のプラグインで共通に使う系（lazy = true で必要になったら呼び出し） 
-    { "nvim-tree/nvim-web-devicons",  lazy = true },
+    -- 他のプラグインで共通に使う系（lazy = true で必要になったら呼び出し）
+    { "nvim-tree/nvim-web-devicons",           lazy = true },
 
     -- 個別
     { import = "plugins.toggleterm" },
@@ -36,7 +36,7 @@ require("lazy").setup({
     { import = "plugins.neo-tree" },
     { import = "plugins.catppuccin" },
     { import = "plugins.nvim-treesitter" },
-    { import = "plugins.nvim-treesitter-context" },
+    -- { import = "plugins.nvim-treesitter-context" },
     { import = "plugins.telescope" },
     -- { import = "plugins.indent" },
     { import = "plugins.hlchunk" },
@@ -72,4 +72,3 @@ require("lazy").setup({
   -- プラグインの自動更新を有効化
   checker = { enabled = false },
 })
-

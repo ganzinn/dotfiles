@@ -135,8 +135,10 @@ end
 config.colors.split = '#cccccc'
 
 -- workspace関連
+local prev_workspace = nil
+local current_workspace = nil
 for _, value in ipairs({
-  -- Create new workspace
+  -- workspace作成
   { mods = 'LEADER|SHIFT', key = 'W', action = act.PromptInputLine {
     description = "(wezterm) Create new workspace:",
     action = wezterm.action_callback(function(window, pane, line)
@@ -145,7 +147,7 @@ for _, value in ipairs({
       end
     end) },
   },
-  -- Select workspace
+  -- workspace選択
   { mods = 'LEADER', key = 'w',
     action = wezterm.action_callback(function(win, pane)
       -- workspace のリストを作成
@@ -170,7 +172,7 @@ for _, value in ipairs({
       }, pane)
     end),
   },
-  -- Rename workspace
+  -- workspace名変更
   { mods = 'LEADER', key = '.', action = act.PromptInputLine {
     description = "(wezterm) Set workspace title:",
     action = wezterm.action_callback(function(window, pane, line)
@@ -179,15 +181,26 @@ for _, value in ipairs({
       end
     end) },
   },
+  -- 前回のworkspaceに切り替え
+  { mods = 'LEADER', key = 's', action = wezterm.action_callback(function(window, pane)
+    if prev_workspace then
+      window:perform_action(act.SwitchToWorkspace { name = prev_workspace }, pane)
+    end
+  end) },
 }) do
   table.insert(config.keys, value)
 end
 -- タブエリアにワークスペース名を表示
 wezterm.on('update-status', function(window, pane)
+  local active = window:active_workspace()
+  if current_workspace ~= active then
+    prev_workspace = current_workspace
+    current_workspace = active
+  end
   local elements = {
     -- { Foreground = { Color = 'blue' } },
     { Background = { Color = 'none' } },
-    { Text = "[   " .. window:active_workspace() .. "   ]" },
+    { Text = "[   " .. active .. "   ]" },
   }
   window:set_left_status(wezterm.format(elements))
 end)

@@ -75,6 +75,9 @@ for _, value in ipairs({
       end
     end) },
   },
+  -- タブの移動
+  { key = '{', mods = 'LEADER', action = act.MoveTabRelative(-1) },
+  { key = '}', mods = 'LEADER', action = act.MoveTabRelative(1) },
 
 }) do
   table.insert(config.keys, value)

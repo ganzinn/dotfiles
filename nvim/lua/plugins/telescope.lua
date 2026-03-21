@@ -14,10 +14,15 @@ return {
     {
       "nvim-telescope/telescope-file-browser.nvim",
     },
+    {
+      "nvim-telescope/telescope-live-grep-args.nvim",
+    },
   },
   keys = {
     {mode = "n", "<C-p>", "<cmd>Telescope find_files<cr>", desc = "Telescopeでファイル検索"},
-    {mode = "n", "<C-g>", "<cmd>Telescope live_grep<cr>", desc = "Telescopeで行検索"},
+    {mode = "n", "<C-g>", function()
+      require("telescope").extensions.live_grep_args.live_grep_args()
+    end, desc = "Telescopeで行検索（引数指定可）"},
   },
   config = function()
     require("telescope").setup({
@@ -64,10 +69,14 @@ return {
           hijack_netrw = true,
           mappings = {},
         },
+        live_grep_args = {
+          auto_quoting = true,
+        },
       },
     })
     require("telescope").load_extension("fzf")
     require("telescope").load_extension("frecency")
     require("telescope").load_extension("file_browser")
+    require("telescope").load_extension("live_grep_args")
   end
 }

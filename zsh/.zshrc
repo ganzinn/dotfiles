@@ -89,7 +89,7 @@ alias la='ls -a'
 alias ll='ls -la'
 alias zshrc="vi $ZDOTDIR/.zshrc"
 alias unicode='ruby -e "p ARGV[0].codepoints.map{|c|c.to_s(16)}"'
-alias tmp='cd ~/tmp'
+alias tmp="cd $HOME/tmp"
 
 # ------------------------------------------------------------------------------------------------
 

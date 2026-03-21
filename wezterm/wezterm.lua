@@ -183,8 +183,22 @@ for _, value in ipairs({
   },
   -- 前回のworkspaceに切り替え
   { mods = 'LEADER', key = 's', action = wezterm.action_callback(function(window, pane)
-    if prev_workspace then
-      window:perform_action(act.SwitchToWorkspace { name = prev_workspace }, pane)
+    local all_workspaces = wezterm.mux.get_workspace_names()
+    local current = wezterm.mux.get_active_workspace()
+    local target = nil
+
+    -- prev_workspaceが有効なら使い、なければ現在以外の最初のworkspaceを使う
+    for _, name in ipairs(all_workspaces) do
+      if name == prev_workspace then
+        target = name
+        break
+      elseif not target and name ~= current then
+        target = name
+      end
+    end
+
+    if target then
+      window:perform_action(act.SwitchToWorkspace { name = target }, pane)
     end
   end) },
 }) do

@@ -14,6 +14,7 @@ eval "$(zoxide init zsh)"
 typeset -U path PATH
 path=(
   $HOME/.local/bin(N-/)
+  ${ZDOTDIR:h}/command(N-/)
   $path
 )
 

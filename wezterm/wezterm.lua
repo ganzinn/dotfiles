@@ -111,26 +111,26 @@ table.insert(config.keys,
 -- パネル関連
 for _, value in ipairs({
   -- 分割
-  { key = '|', mods = 'LEADER|SHIFT', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
-  { key = '-', mods = 'LEADER',       action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+  { key = '\\', mods = 'LEADER',       action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+  { key = '-',  mods = 'LEADER',       action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
   -- 移動
-  { key = "h", mods = "LEADER",       action = act.ActivatePaneDirection("Left") },
-  { key = "l", mods = "LEADER",       action = act.ActivatePaneDirection("Right") },
-  { key = "k", mods = "LEADER",       action = act.ActivatePaneDirection("Up") },
-  { key = "j", mods = "LEADER",       action = act.ActivatePaneDirection("Down") },
+  { key = "h",  mods = "LEADER",       action = act.ActivatePaneDirection("Left") },
+  { key = "l",  mods = "LEADER",       action = act.ActivatePaneDirection("Right") },
+  { key = "k",  mods = "LEADER",       action = act.ActivatePaneDirection("Up") },
+  { key = "j",  mods = "LEADER",       action = act.ActivatePaneDirection("Down") },
   -- サイズ変更
-  { key = 'h', mods = 'OPT',          action = act.AdjustPaneSize { 'Left', 25 } },
-  { key = 'l', mods = 'OPT',          action = act.AdjustPaneSize { 'Right', 25 } },
-  { key = 'k', mods = 'OPT',          action = act.AdjustPaneSize { 'Up', 10 } },
-  { key = 'k', mods = 'OPT|SHIFT',    action = act.AdjustPaneSize { 'Up', 100 } },
-  { key = 'j', mods = 'OPT',          action = act.AdjustPaneSize { 'Down', 10 } },
-  { key = 'j', mods = 'OPT|SHIFT',    action = act.AdjustPaneSize { 'Down', 100 } },
+  { key = 'h',  mods = 'OPT',          action = act.AdjustPaneSize { 'Left', 25 } },
+  { key = 'l',  mods = 'OPT',          action = act.AdjustPaneSize { 'Right', 25 } },
+  { key = 'k',  mods = 'OPT',          action = act.AdjustPaneSize { 'Up', 10 } },
+  { key = 'k',  mods = 'OPT|SHIFT',    action = act.AdjustPaneSize { 'Up', 100 } },
+  { key = 'j',  mods = 'OPT',          action = act.AdjustPaneSize { 'Down', 10 } },
+  { key = 'j',  mods = 'OPT|SHIFT',    action = act.AdjustPaneSize { 'Down', 100 } },
   -- 最大化
-  { key = 'z', mods = 'LEADER',       action = act.TogglePaneZoomState },
+  { key = 'z',  mods = 'LEADER',       action = act.TogglePaneZoomState },
   -- ペインの削除
-  { key = 'P', mods = 'LEADER|SHIFT', action = act.CloseCurrentPane { confirm = true } },
+  { key = 'P',  mods = 'LEADER|SHIFT', action = act.CloseCurrentPane { confirm = true } },
   -- コピーモード
-  { key = '[', mods = 'LEADER',       action = act.ActivateCopyMode },
+  { key = '[',  mods = 'LEADER',       action = act.ActivateCopyMode },
 }) do
   table.insert(config.keys, value)
 end

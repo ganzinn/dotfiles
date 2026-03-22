@@ -52,12 +52,25 @@ while IFS= read -r line; do
         skipped+=("$wt_name (branch not found)")
       else
         echo "Rebasing: $wt_name ($wt_path)"
+        original_branch=$(git -C "$wt_path" rev-parse --abbrev-ref HEAD)
+        has_changes=false
+        if [[ -n "$(git -C "$wt_path" status --porcelain)" ]]; then
+          git -C "$wt_path" stash push --include-untracked -m "rebase-worktrees: auto stash"
+          has_changes=true
+        fi
+        git -C "$wt_path" checkout "$wt_name"
         if git -C "$wt_path" rebase "$DEFAULT_BRANCH"; then
           success+=("$wt_name")
         else
           git -C "$wt_path" rebase --abort 2>/dev/null
           echo "  -> Failed. Aborted." >&2
           failed+=("$wt_name")
+        fi
+        if [[ "$original_branch" != "$wt_name" ]]; then
+          git -C "$wt_path" checkout "$original_branch"
+        fi
+        if [[ "$has_changes" == true ]]; then
+          git -C "$wt_path" stash pop
         fi
       fi
     fi

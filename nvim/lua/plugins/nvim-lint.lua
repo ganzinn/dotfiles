@@ -6,10 +6,10 @@ return {
     local lint = require("lint")
 
     lint.linters_by_ft = {
-      javascript = { "eslint" },
-      typescript = { "eslint" },
-      javascriptreact = { "eslint" },
-      typescriptreact = { "eslint" },
+      javascript = { "eslint", "biomejs" },
+      typescript = { "eslint", "biomejs" },
+      javascriptreact = { "eslint", "biomejs" },
+      typescriptreact = { "eslint", "biomejs" },
       ruby = { "rubocop" },
     }
 
@@ -17,10 +17,25 @@ return {
     lint.linters.rubocop.cmd = "bundle"
     lint.linters.rubocop.args = { "exec", "rubocop", "--format", "json", "--force-exclusion" }
 
-    -- ファイル保存時とファイル読み込み時にlintを実行
+    -- ファイル保存時とファイル読み込み時にlintを実行（コマンドが存在するlinterのみ）
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
       callback = function()
-        lint.try_lint()
+        local ft = vim.bo.filetype
+        local names = lint.linters_by_ft[ft] or {}
+        local available = {}
+        for _, name in ipairs(names) do
+          local linter = lint.linters[name]
+          local cmd = linter and linter.cmd
+          if type(cmd) == "function" then
+            cmd = cmd()
+          end
+          if cmd and vim.fn.executable(cmd) == 1 then
+            table.insert(available, name)
+          end
+        end
+        if #available > 0 then
+          lint.try_lint(available)
+        end
       end,
     })
   end,

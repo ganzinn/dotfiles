@@ -32,6 +32,37 @@ end
 local base_is_merge_base = false
 vim.g.gitsigns_base = 'HEAD'
 
+-- [MONKEY-PATCH] neo-tree の git.status() キャッシュバグ回避
+-- git/init.lua の raw_status_text_cache ヒット時に git_status_over_base（3番目の戻り値）が
+-- 返されず、worktree.status_diff にも格納されないバグを補完する。
+-- neo-tree 側で修正されたらこの patch は削除すること。
+-- 関連: https://github.com/nvim-neo-tree/neo-tree.nvim のキャッシュ処理 (git/init.lua)
+local neo_tree_patched = false
+local function patch_neo_tree_git_status()
+  if neo_tree_patched then return end
+  local ok, neo_git = pcall(require, 'neo-tree.git')
+  if not ok then return end
+  local original_status = neo_git.status -- [MONKEY-PATCH] オリジナルを退避
+  neo_git.status = function(path, base_lookup, skip_bubbling, status_opts)
+    local status, worktree_root, over_base = original_status(path, base_lookup, skip_bubbling, status_opts)
+    -- [MONKEY-PATCH] キャッシュヒットで over_base が欠落している場合に補完
+    if status and worktree_root and not over_base and base_lookup and base_lookup[worktree_root] then
+      local diff_ok, diff = pcall(require, 'neo-tree.git.diff')
+      if diff_ok then
+        local base = base_lookup[worktree_root]
+        over_base = diff.diff_name_status(worktree_root, base, not not skip_bubbling)
+        -- [MONKEY-PATCH] レンダラー用に worktree.status_diff にも格納
+        local wt = neo_git.worktrees[worktree_root]
+        if over_base and wt then
+          wt.status_diff[base] = over_base
+        end
+      end
+    end
+    return status, worktree_root, over_base
+  end
+  neo_tree_patched = true
+end
+
 return {
   -- Git変更箇所の表示
   'lewis6991/gitsigns.nvim',
@@ -50,6 +81,7 @@ return {
     {
       '<leader>gm',
       function()
+        patch_neo_tree_git_status()
         local gitsigns = require('gitsigns')
         local current_win = vim.api.nvim_get_current_win()
         if base_is_merge_base then

@@ -1,6 +1,6 @@
--- gitリポジトリかどうかを判定するヘルパー関数
-local function is_git_repo()
-  vim.fn.system('git rev-parse --is-inside-work-tree 2>/dev/null')
+-- 指定したgit refが解決可能かを判定（git外/空リポジトリ/存在しないrefを除外）
+local function has_valid_git_base(base)
+  vim.fn.system('git rev-parse --verify ' .. vim.fn.shellescape(base) .. ' 2>/dev/null')
   return vim.v.shell_error == 0
 end
 
@@ -57,7 +57,7 @@ return {
       function()
         local base = vim.g.gitsigns_base or 'HEAD'
         local source = vim.g.neo_tree_source or 'filesystem'
-        local git_base_opt = is_git_repo() and (' git_base=' .. base) or ''
+        local git_base_opt = has_valid_git_base(base) and (' git_base=' .. base) or ''
 
         if source == 'git_status' then
           vim.cmd('Neotree toggle git_status' .. git_base_opt .. ' action=show')
@@ -72,7 +72,7 @@ return {
       function()
         local base = vim.g.gitsigns_base or 'HEAD'
         local current_win = vim.api.nvim_get_current_win()
-        local git_base_opt = is_git_repo() and (' git_base=' .. base) or ''
+        local git_base_opt = has_valid_git_base(base) and (' git_base=' .. base) or ''
 
         -- グローバル変数でソース状態を追跡
         if vim.g.neo_tree_source == 'git_status' then

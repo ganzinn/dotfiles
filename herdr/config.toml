@@ -1,0 +1,62 @@
+# herdr 設定 (~/.config/herdr/config.toml)
+# 多重化(ペイン分割/タブ/ワークスペース)を担当する。
+# 既定値は `herdr --default-config`、反映は `herdr server reload-config`。
+
+[theme]
+# 既定(ターミナル配色)のまま。catppuccin / tokyo-night / dracula 等を name に設定可。
+# name = "catppuccin"
+
+[terminal]
+# 空にすると $SHELL(= /bin/zsh)が使われる。
+# default_shell = ""
+shell_mode = "auto"
+
+[keys]
+prefix = "ctrl+a"
+
+# --- ペイン移動 ---
+focus_pane_left  = "prefix+h"
+focus_pane_down  = "prefix+j"
+focus_pane_up    = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# --- ペイン分割 (minus=上下 / \=左右) ---
+split_horizontal = "prefix+minus"
+split_vertical   = "prefix+\\"
+
+# --- ズーム/最大化 ---
+zoom = "prefix+z"
+
+# --- ペイン削除 / 名前変更 ---
+close_pane  = "prefix+shift+p"
+rename_pane = "prefix+x"
+
+# --- タブ名変更 ---
+rename_tab = "prefix+comma"
+
+# --- タブ作成/番号切替 (Ghostty の cmd+t / cmd+1..9 から呼ばれる) ---
+new_tab    = "prefix+c"
+switch_tab = "prefix+1..9"
+
+# --- ワークスペース ---
+workspace_picker = "prefix+w"
+new_workspace    = "prefix+shift+w"
+rename_workspace = "prefix+."
+# 既定 settings=prefix+s と衝突するため settings を移動。
+previous_workspace = "prefix+s"
+settings           = "prefix+shift+s"
+
+[ui]
+# サイドバー幅を狭めの18列に固定(既定は自動スケール)。
+sidebar_width = 18
+
+# 新規タブを名前入力なしで即座に作成(既定 true は作成前に名前を尋ねる)。
+prompt_new_tab_name = false
+
+# 分割ペインの隙間を無くし仕切り枠線を共有(既定 true は隙間で分離)。
+pane_gaps = false
+
+# --- エージェント通知のトースト (既定 off。サウンドは [ui.sound] 既定 on) ---
+# terminal = 外側ターミナル(Ghostty)にデスクトップ通知を依頼する。
+[ui.toast]
+delivery = "terminal"

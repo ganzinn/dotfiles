@@ -1,0 +1,59 @@
+# Ghostty 設定
+# 外観を担当し、多重化(ペイン分割/タブ/ワークスペース)は herdr に委譲する。
+# 参考: ghostty +show-config --default --docs / +validate-config
+
+# --- フォント ---
+font-family = "PlemolJP Console NF"
+font-size = 15
+
+# --- 余白 ---
+window-padding-x = 0
+window-padding-y = 0
+
+# --- タイトルバー非表示 ---
+# ウィンドウ移動は枠のリサイズ領域を option(⌥)+ドラッグで行う(macOS 標準)。
+macos-titlebar-style = hidden
+
+# --- 背景 ---
+background = 000000
+
+# --- 配色 (テーマ未指定時の組み込みデフォルト差を避けるため明示指定) ---
+foreground = bcbcbc
+cursor-color = 52ad70
+cursor-text = 000000
+palette = 0=#000000
+palette = 1=#cc5555
+palette = 2=#55cc55
+palette = 3=#cdcd55
+palette = 4=#5455cb
+palette = 5=#cc55cc
+palette = 6=#7acaca
+palette = 7=#cccccc
+palette = 8=#555555
+palette = 9=#ff5555
+palette = 10=#55ff55
+palette = 11=#ffff55
+palette = 12=#5555ff
+palette = 13=#ff55ff
+palette = 14=#55ffff
+palette = 15=#ffffff
+
+# --- 背景の透過トグル (opacity>=1 だと no-op のため基準を 0.7 に置く) ---
+background-opacity = 0.7
+keybind = cmd+u=toggle_background_opacity
+
+# --- ウィンドウ表示トグル (global: で非アクティブ時も発火。要アクセシビリティ権限) ---
+keybind = global:ctrl+enter=toggle_visibility
+
+# --- cmd+t / cmd+1..9: herdr のタブ操作 (prefix ctrl+a=\x01 + キーを送信) ---
+# 数字は物理キー(cmd+digit_N)で上書き。cmd+0 は reset_font_size と衝突のため除外。
+keybind = cmd+t=text:\x01c
+keybind = cmd+digit_1=text:\x011
+keybind = cmd+digit_2=text:\x012
+keybind = cmd+digit_3=text:\x013
+keybind = cmd+digit_4=text:\x014
+keybind = cmd+digit_5=text:\x015
+keybind = cmd+digit_6=text:\x016
+keybind = cmd+digit_7=text:\x017
+keybind = cmd+digit_8=text:\x018
+keybind = cmd+digit_9=text:\x019

@@ -27,6 +27,9 @@ split_vertical   = "prefix+\\"
 # --- ズーム/最大化 ---
 zoom = "prefix+z"
 
+# --- ペインリサイズ (リサイズモードに入り境界を移動) ---
+resize_mode = "prefix+r"
+
 # --- ペイン削除 / 名前変更 ---
 close_pane  = "prefix+shift+p"
 rename_pane = "prefix+x"

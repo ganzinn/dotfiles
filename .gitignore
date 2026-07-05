@@ -8,3 +8,6 @@
 
 # zsh補完ダンプファイル
 .zcompdump
+
+# zshセッション復元ファイル（macOS Terminal.app が生成）
+.zsh_sessions/
